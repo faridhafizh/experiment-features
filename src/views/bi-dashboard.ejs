@@ -54,19 +54,19 @@
     <h3 style="margin:0;">Filter Laporan</h3>
   </div>
   <div class="grid grid-2">
-    <div><label>Periode Mulai</label><input type="date" id="start" /></div>
-    <div><label>Periode Akhir</label><input type="date" id="end" /></div>
+    <div><label for="start">Periode Mulai</label><input type="date" id="start" /></div>
+    <div><label for="end">Periode Akhir</label><input type="date" id="end" /></div>
     <div>
-      <label>Segmen Usaha</label>
+      <label for="segmen">Segmen Usaha</label>
       <select id="segmen"><option value="">Semua Segmen</option><option value="BUMDes">BUMDes</option><option value="Sekolah">Sekolah</option><option value="Pasar_Desa">Pasar Desa</option><option value="Komunitas">Komunitas</option><option value="Lainnya">Lainnya</option></select>
     </div>
-    <div><label>Provinsi</label><input id="provinsi" placeholder="contoh: Jawa Barat" /></div>
+    <div><label for="provinsi">Provinsi</label><input id="provinsi" placeholder="contoh: Jawa Barat" /></div>
     <div>
-      <label>Partner PJP</label>
+      <label for="pjpId">Partner PJP</label>
       <select id="pjpId"><option value="">Semua PJP</option><% allPjp.forEach((u)=> { %><option value="<%= u.id %>"><%= u.namaLengkap %></option><% }) %></select>
     </div>
     <div style="display:flex;align-items:end;">
-      <button class="btn" style="width:100%" onclick="loadData()">Terapkan Filter</button>
+      <button id="filter-btn" class="btn" style="width:100%" onclick="loadData()">Terapkan Filter</button>
     </div>
   </div>
 </div>
@@ -116,15 +116,21 @@ function escapeHTML(str) {
 
 let chart;
 async function loadData() {
-  const params = new URLSearchParams({
-    start: document.getElementById('start').value,
-    end: document.getElementById('end').value,
-    segmen: document.getElementById('segmen').value,
-    pjpId: document.getElementById('pjpId').value,
-    provinsi: document.getElementById('provinsi').value
-  });
-  const res = await fetch('/bi/dashboard/data?' + params.toString());
-  const data = await res.json();
+  const filterBtn = document.getElementById('filter-btn');
+  if (filterBtn) {
+    filterBtn.disabled = true;
+    filterBtn.textContent = 'Memuat...';
+  }
+  try {
+    const params = new URLSearchParams({
+      start: document.getElementById('start').value,
+      end: document.getElementById('end').value,
+      segmen: document.getElementById('segmen').value,
+      pjpId: document.getElementById('pjpId').value,
+      provinsi: document.getElementById('provinsi').value
+    });
+    const res = await fetch('/bi/dashboard/data?' + params.toString());
+    const data = await res.json();
 
   const lateBody = document.querySelector('#lateTable tbody');
   lateBody.innerHTML = '';
@@ -149,8 +155,12 @@ async function loadData() {
     data: { labels, datasets: [{ label: 'Onboarding', data: values, borderColor: '#1d4ed8' }] },
     options: { responsive: true }
   });
-
-  alert('Dashboard BI diperbarui');
+  } finally {
+    if (filterBtn) {
+      filterBtn.disabled = false;
+      filterBtn.textContent = 'Terapkan Filter';
+    }
+  }
 }
 
 loadData();
