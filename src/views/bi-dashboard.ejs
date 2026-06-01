@@ -128,15 +128,24 @@ async function loadData() {
 
   const lateBody = document.querySelector('#lateTable tbody');
   lateBody.innerHTML = '';
-  data.rows.filter(r => r.statusSla === 'late').forEach((r) => {
-    lateBody.innerHTML += `<tr><td>${escapeHTML(r.checklistCode)}</td><td>${escapeHTML(r.pjp.namaLengkap)}</td><td>${escapeHTML(r.namaMerchant)}</td><td>${escapeHTML(r.desa)}, ${escapeHTML(r.kecamatan)}</td><td><span class='badge red'>TERLAMBAT</span></td><td><form method='post' action='/bi/checklist/${r.id}/delete' onsubmit="return confirm('Hapus data?')"><button class='btn danger' type='submit'>Hapus</button></form></td></tr>`;
-  });
+  const lateRows = data.rows.filter(r => r.statusSla === 'late');
+  if (lateRows.length > 0) {
+    lateRows.forEach((r) => {
+      lateBody.innerHTML += `<tr><td>${escapeHTML(r.checklistCode)}</td><td>${escapeHTML(r.pjp.namaLengkap)}</td><td>${escapeHTML(r.namaMerchant)}</td><td>${escapeHTML(r.desa)}, ${escapeHTML(r.kecamatan)}</td><td><span class='badge red'>TERLAMBAT</span></td><td><form method='post' action='/bi/checklist/${r.id}/delete' onsubmit="return confirm('Hapus data?')"><button class='btn danger' type='submit'>Hapus</button></form></td></tr>`;
+    });
+  } else {
+    lateBody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">Tidak ada data keterlambatan.</td></tr>`;
+  }
 
   const pjpBody = document.querySelector('#pjpTable tbody');
   pjpBody.innerHTML = '';
-  data.pjpTable.forEach((p) => {
-    pjpBody.innerHTML += `<tr><td>${escapeHTML(p.nama)}</td><td>${escapeHTML(p.total)}</td><td>${escapeHTML(p.late)}</td><td>${escapeHTML(p.kepatuhan)}%</td></tr>`;
-  });
+  if (data.pjpTable && data.pjpTable.length > 0) {
+    data.pjpTable.forEach((p) => {
+      pjpBody.innerHTML += `<tr><td>${escapeHTML(p.nama)}</td><td>${escapeHTML(p.total)}</td><td>${escapeHTML(p.late)}</td><td>${escapeHTML(p.kepatuhan)}%</td></tr>`;
+    });
+  } else {
+    pjpBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">Belum ada data kepatuhan PJP.</td></tr>`;
+  }
 
   const mapList = document.getElementById('mapList');
   mapList.innerHTML = data.mapPoints.slice(0, 15).map((p) => `• ${escapeHTML(p.namaMerchant)} (${escapeHTML(p.desa)}, ${escapeHTML(p.kabupaten)})`).join('<br>') || 'Belum ada data.';

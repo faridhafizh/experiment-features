@@ -29,13 +29,21 @@
         </tr>
       </thead>
       <tbody>
-        <% merchants.forEach(m => { %>
+        <% if (merchants && merchants.length > 0) { %>
+          <% merchants.forEach(m => { %>
+            <tr>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= m.name %></td>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= m.category %></td>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= m.status %></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
           <tr>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= m.name %></td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= m.category %></td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= m.status %></td>
+            <td colspan="3" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
+              Belum ada data merchant. Silakan tambahkan merchant baru.
+            </td>
           </tr>
-        <% }) %>
+        <% } %>
       </tbody>
     </table>
   </div>
