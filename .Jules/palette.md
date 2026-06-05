@@ -1,3 +1,3 @@
-## 2026-05-16 - Improved PJP Dashboard Empty State
-**Learning:** Replaced a simple text empty state with an engaging UI block including an icon and call-to-action button, successfully improving the visual guidance for first-time users without adding any new CSS classes.
-**Action:** When adding empty states, always consider adding an actionable button and a visual icon using existing utilities to guide users.
+## 2024-10-27 - Responsive Tables Empty State and Wrappers
+**Learning:** Tables across the app tend to lack an empty state message and aren't responsive on mobile by default.
+**Action:** When working on tables, ensure they are wrapped in `<div class="table-wrapper">` for horizontal scrolling on mobile, and implement an empty state graphic using the established SVG pattern and helper text to provide feedback when no data is present.
