@@ -303,3 +303,9 @@ a:hover { text-decoration: underline; }
     color: var(--accent);
   }
 }
+
+/* Global Keyboard Accessibility Focus Styles */
+.btn:focus-visible, a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
