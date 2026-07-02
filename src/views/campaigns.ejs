@@ -24,14 +24,23 @@
         </tr>
       </thead>
       <tbody>
-        <% campaigns.forEach(c => { %>
+        <% if (campaigns && campaigns.length > 0) { %>
+          <% campaigns.forEach(c => { %>
+            <tr>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= c.name %></td>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= c.target %></td>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= new Date(c.startDate).toLocaleDateString('id-ID') %></td>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= new Date(c.endDate).toLocaleDateString('id-ID') %></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
           <tr>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= c.name %></td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= c.target %></td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= new Date(c.startDate).toLocaleDateString('id-ID') %></td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--border);"><%= new Date(c.endDate).toLocaleDateString('id-ID') %></td>
+            <td colspan="4" style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <div style="margin-bottom: 1rem;">Belum ada campaign...</div>
+            </td>
           </tr>
-        <% }) %>
+        <% } %>
       </tbody>
     </table>
   </div>
