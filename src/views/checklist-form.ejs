@@ -23,12 +23,12 @@
     <h4 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;">Informasi Umum</h4>
     <div class="grid grid-2 mb-6">
       <div>
-        <label>Tanggal Kunjungan</label>
-        <input name="tanggal_kunjungan" type="date" value="<%= checklist ? new Date(checklist.tanggalKunjungan).toISOString().slice(0,10) : '' %>" required />
+        <label for="tanggal_kunjungan">Tanggal Kunjungan <span aria-hidden="true" style="color: var(--danger)">*</span></label>
+        <input id="tanggal_kunjungan" name="tanggal_kunjungan" type="date" value="<%= checklist ? new Date(checklist.tanggalKunjungan).toISOString().slice(0,10) : '' %>" required />
       </div>
       <div>
-        <label>Merchant Terdaftar (Opsional)</label>
-        <select name="merchantId">
+        <label for="merchantId">Merchant Terdaftar (Opsional)</label>
+        <select id="merchantId" name="merchantId">
           <option value="">-- Pilih Merchant --</option>
           <% merchants.forEach(m => { %>
             <option value="<%= m.id %>" <%= checklist?.merchantId === m.id ? 'selected' : '' %>><%= m.name %> (<%= m.category %>)</option>
@@ -36,12 +36,12 @@
         </select>
       </div>
       <div>
-        <label>Nama Merchant (Manual)</label>
-        <input name="nama_merchant" placeholder="Contoh: Toko Berkah" value="<%= checklist?.namaMerchant || '' %>" required />
+        <label for="nama_merchant">Nama Merchant (Manual) <span aria-hidden="true" style="color: var(--danger)">*</span></label>
+        <input id="nama_merchant" name="nama_merchant" placeholder="Contoh: Toko Berkah" value="<%= checklist?.namaMerchant || '' %>" required />
       </div>
       <div>
-        <label>Campaign (Opsional)</label>
-        <select name="campaignId">
+        <label for="campaignId">Campaign (Opsional)</label>
+        <select id="campaignId" name="campaignId">
           <option value="">-- Pilih Campaign --</option>
           <% campaigns.forEach(c => { %>
             <option value="<%= c.id %>" <%= checklist?.campaignId === c.id ? 'selected' : '' %>><%= c.name %></option>
@@ -49,8 +49,8 @@
         </select>
       </div>
       <div>
-        <label>Segmen Usaha</label>
-        <select name="segmen" required>
+        <label for="segmen">Segmen Usaha <span aria-hidden="true" style="color: var(--danger)">*</span></label>
+        <select id="segmen" name="segmen" required>
           <% ['BUMDes','Sekolah','Pasar_Desa','Komunitas','Lainnya'].forEach((s) => { %>
             <option value="<%= s %>" <%= checklist?.segmen === s ? 'selected' : '' %>><%= s.replace('_',' ') %></option>
           <% }) %>
@@ -60,49 +60,49 @@
 
     <h4 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; border-top: 1px solid var(--border); padding-top: 1.5rem;">Lokasi Merchant</h4>
     <div class="grid grid-2 mb-6">
-      <div><label>Provinsi</label><input name="provinsi" placeholder="Provinsi" value="<%= checklist?.provinsi || '' %>" required /></div>
-      <div><label>Kabupaten / Kota</label><input name="kabupaten" placeholder="Kabupaten / Kota" value="<%= checklist?.kabupaten || '' %>" required /></div>
-      <div><label>Kecamatan</label><input name="kecamatan" placeholder="Kecamatan" value="<%= checklist?.kecamatan || '' %>" required /></div>
-      <div><label>Desa / Kelurahan</label><input name="desa" placeholder="Desa / Kelurahan" value="<%= checklist?.desa || '' %>" required /></div>
+      <div><label for="provinsi">Provinsi <span aria-hidden="true" style="color: var(--danger)">*</span></label><input id="provinsi" name="provinsi" placeholder="Provinsi" value="<%= checklist?.provinsi || '' %>" required /></div>
+      <div><label for="kabupaten">Kabupaten / Kota <span aria-hidden="true" style="color: var(--danger)">*</span></label><input id="kabupaten" name="kabupaten" placeholder="Kabupaten / Kota" value="<%= checklist?.kabupaten || '' %>" required /></div>
+      <div><label for="kecamatan">Kecamatan <span aria-hidden="true" style="color: var(--danger)">*</span></label><input id="kecamatan" name="kecamatan" placeholder="Kecamatan" value="<%= checklist?.kecamatan || '' %>" required /></div>
+      <div><label for="desa">Desa / Kelurahan <span aria-hidden="true" style="color: var(--danger)">*</span></label><input id="desa" name="desa" placeholder="Desa / Kelurahan" value="<%= checklist?.desa || '' %>" required /></div>
     </div>
 
     <h4 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; border-top: 1px solid var(--border); padding-top: 1.5rem;">Status Edukasi & Onboarding</h4>
     <div class="grid grid-2 mb-6">
       <div>
-        <label>Status Edukasi QRIS</label>
-        <select name="sudah_diedukasi" required>
+        <label for="sudah_diedukasi">Status Edukasi QRIS <span aria-hidden="true" style="color: var(--danger)">*</span></label>
+        <select id="sudah_diedukasi" name="sudah_diedukasi" required>
           <option value="Ya" <%= checklist?.sudahDiedukasi ? 'selected' : '' %>>Sudah Edukasi</option>
           <option value="Tidak" <%= checklist && !checklist.sudahDiedukasi ? 'selected' : '' %>>Belum Edukasi</option>
         </select>
       </div>
       <div>
-        <label>Bersedia Onboarding QRIS?</label>
+        <label for="bersedia_onboarding">Bersedia Onboarding QRIS? <span aria-hidden="true" style="color: var(--danger)">*</span></label>
         <select name="bersedia_onboarding" id="bersedia_onboarding" required>
           <option value="Ya" <%= checklist?.bersediaOnboarding ? 'selected' : '' %>>Ya, Bersedia</option>
           <option value="Tidak" <%= checklist && !checklist.bersediaOnboarding ? 'selected' : '' %>>Tidak Bersedia</option>
         </select>
       </div>
       <div style="grid-column: 1 / -1;">
-        <label>Alasan Penolakan (Wajib diisi jika tidak bersedia)</label>
-        <input name="alasan_penolakan" placeholder="Contoh: Merasa belum butuh, ribet, dll" value="<%= checklist?.alasanPenolakan || '' %>" />
+        <label for="alasan_penolakan">Alasan Penolakan (Wajib diisi jika tidak bersedia)</label>
+        <input id="alasan_penolakan" name="alasan_penolakan" placeholder="Contoh: Merasa belum butuh, ribet, dll" value="<%= checklist?.alasanPenolakan || '' %>" />
       </div>
     </div>
 
     <h4 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; border-top: 1px solid var(--border); padding-top: 1.5rem;">Lampiran & Catatan Tambahan</h4>
     <div class="grid grid-2 mb-6">
       <div>
-        <label>Bukti Dokumentasi Kunjungan (Foto)</label>
+        <label for="foto">Bukti Dokumentasi Kunjungan (Foto)</label>
         <div style="border: 1px dashed var(--border); padding: 1.5rem; text-align: center; border-radius: var(--radius); background: #f8fafc;">
-          <input name="foto" type="file" accept="image/*" style="background: transparent; border: none; padding: 0;" />
+          <input id="foto" name="foto" type="file" accept="image/*" style="background: transparent; border: none; padding: 0;" />
         </div>
       </div>
       <div>
-        <label>Catatan Tambahan (Opsional)</label>
-        <textarea name="catatan" rows="4" placeholder="Masukkan catatan temuan di lapangan..."><%= checklist?.catatan || '' %></textarea>
+        <label for="catatan">Catatan Tambahan (Opsional)</label>
+        <textarea id="catatan" name="catatan" rows="4" placeholder="Masukkan catatan temuan di lapangan..."><%= checklist?.catatan || '' %></textarea>
       </div>
       <div style="grid-column: span 2;">
-        <label>Checklist Dinamis (Format JSON, Opsional)</label>
-        <textarea name="dynamicData" rows="4" placeholder='{"edukasi_promo": "ya", "kendala": "jaringan internet"}'><%= checklist?.dynamicData || '' %></textarea>
+        <label for="dynamicData">Checklist Dinamis (Format JSON, Opsional)</label>
+        <textarea id="dynamicData" name="dynamicData" rows="4" placeholder='{"edukasi_promo": "ya", "kendala": "jaringan internet"}'><%= checklist?.dynamicData || '' %></textarea>
       </div>
     </div>
 
